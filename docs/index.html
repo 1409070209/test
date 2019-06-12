@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>lei</title>
+    <style>
+        #root {
+            width: 800px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            grid-auto-rows: 10px;
+        }
+        .context {
+            width: 300px;
+            margin-bottom: 10px;
+            overflow: hidden;
+            border-bottom: 1px rebeccapurple solid;
+        }
+        img {
+            width: 300px;
+        }
+    </style>
+</head>
+<body>
+    <p>一次性加载20个宽度400高度完全随机的Dom元素</p>
+    <div id="root">
+    </div>
+    <script>
+        let load = function () {
+          let template = '<div class="context" style="#height">' +
+            '<img src="https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=3044066119,957318303&fm=26&gp=0.jpg' +
+            '" alt="avi"></div>';
+          let number = 20;
+          for (let i = 0;i < number; i++) {
+            let height = parseInt((Math.random()*30), 10) + 10
+            document.querySelector('#root').innerHTML += template.replace(/#height/g, `grid-row: auto/span ${height}`)
+          }
+        }
+        window.addEventListener('load', function (e) {
+            load()
+        })
+        window.addEventListener('scroll', function (e) {
+          if(window.scrollY + window.screen.height >= document.querySelector('#root').offsetHeight) {
+            load();
+          }
+        })
+    </script>
+</body>
+</html>
